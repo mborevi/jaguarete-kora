@@ -21,6 +21,8 @@ function love.update(dt)
     for i, dog in pairs(dogs) do
         if dog.active then
             dog:grab()
+		else	
+			dog:drop(tiles)
         end
     end
 end
@@ -32,11 +34,11 @@ function love.draw(dt)
 	end
     for i, dog in pairs(dogs) do 
 		love.graphics.draw(dog.img, dog.x, dog.y)
+		love.graphics.print(tostring(dog.active), dog.x + 12, dog.y, 0, 2, 2)
 	end
 end
 
 function love.mousepressed(x, y, button)
-    local Dog  = require "Piece"
 	if button == 1 then
         for i, dog in pairs(dogs) do
 		    if isMouseHovering(dog) then
@@ -52,7 +54,7 @@ function love.mousereleased()
 	end
 end
 
-function isMouseHovering(t, x2,y2,w2,h2)
+function isMouseHovering(t)
 	return t.x < love.mouse.getX() and
 	love.mouse.getX() < t.x +t.img:getWidth() and
 		   t.y < love.mouse.getY() and
