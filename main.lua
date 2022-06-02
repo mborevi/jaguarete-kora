@@ -48,6 +48,8 @@ end
 function love.mousereleased()
 	for i, dog in pairs(dogs) do
 		dog.active = false
+        --dog:drop(tiles)
 	end
 end
+
 
