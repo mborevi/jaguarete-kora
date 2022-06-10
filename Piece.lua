@@ -23,24 +23,19 @@ function Piece:load(piece, tiles)
 end
 
 function Piece:grab(tile)
+    self.active = true
     self.x = love.mouse.getX() - (Piece.img:getWidth() / 2)
     self.y = love.mouse.getY() - (Piece.img:getHeight() / 2)
     for i, tile in pairs(tiles) do
-        if isOnTile(self, tile) then
+        if self:isOnTile(self, tile) then
             tile.empty = true
-            currentTile = tiles[i].number
-            if currentTile+5 < 32 then
-                tiles[currentTile+5].number = 666
-                tiles[currentTile+6].number = 666
-                tiles[currentTile+4].number = 666ll
-            end
         end
     end
 end
 
 function Piece:drop(tiles)
     for i, tile in pairs(tiles) do
-        if isOnTile(self, tile) and tile.empty then
+        if self:isOnTile(self, tile) and tile.empty then
             self.x = tile.x - (self.img:getWidth()/2)
             self.y = tile.y - (self.img:getHeight()/2)
             tile.empty = false
@@ -50,18 +45,52 @@ function Piece:drop(tiles)
     end
 end
 
-function Piece:isOnTile(t1, tile)
-    return t1.x < tile.x+tile.size and
-            tile.x < t1.x+t1.img:getWidth() and
-           t1.y < tile.y+tile.size and
-           tile.y < t1.y+t1.img:getHeight()
+function Piece:isOnTile(t1, tile) --fix this, it should check against self and not table
+    if t1.x < tile.x+tile.size and tile.x < t1.x+t1.img:getWidth() and t1.y < tile.y+tile.size and tile.y < t1.y+t1.img:getHeight() then
+        tile.empty = false
+        return true
+    else
+        return false
+    end
 end
 
-function Piece:canMoveTo(tiles) 
+function Piece:getActive()
+    return self.active
+end
+
+function Piece:getTile(tiles)
     for i, tile in pairs(tiles) do
-        if self:isOntile(self, tile) then
-            if then 
-            end
-        else
+        if self:isOnTile() then
+            return tile
+        end
     end
+end
+
+function Piece:checkMoves(t, tiles)
+    --nightmare
+    moves = {
+        {x = 0, y = 0},
+        {x = 0, y = 0} 
+    }
+end
+
+function Piece:findNearest(moves)
+    nearest = {}
+    n = 0
+    c = 0
+    for i, move in pairs(moves) do
+        if self.x < move.x then
+            c = self.x - move.x
+            if (c < n) then
+                n = c
+            end
+        end
+    end
+    
+    return neareast
+end
+
+function Piece:moveTo(n)
+    self.x = n.getX()
+    self.y = n.geyY()
 end
