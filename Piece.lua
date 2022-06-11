@@ -1,5 +1,5 @@
 Piece = {
-    img = love.graphics.newImage('dog.jpg'),
+    img = "",
     x = 0,
     y = 0,
     lastTile = {},
@@ -8,8 +8,8 @@ Piece = {
     canDrop = false
 }
 
-function Piece:new(x, y, active, alive, tile)
-    obj = {x = x - (Piece.img:getWidth()/2), y = y - (Piece.img:getHeight()/2), active = active, alive = alive}
+function Piece:new(img, x, y, active, alive, tile)
+    obj = {img = img, x = x - (40), y = y - (40), active = active, alive = alive}
     setmetatable(obj, self)
     self.__index = self
     return obj
@@ -18,7 +18,7 @@ end
 function Piece:load(piece, tiles)
     for i, tile in pairs(tiles) do
         if i < 16 then
-            newPiece = Piece:new(tile.x, tile.y, false, true)
+            newPiece = Piece:new(love.graphics.newImage('dog.jpg'), tile.x, tile.y, false, true)
             table.insert(piece, newPiece)
         end
     end
