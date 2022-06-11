@@ -2,11 +2,13 @@ Piece = {
     img = love.graphics.newImage('dog.jpg'),
     x = 0,
     y = 0,
+    lastTile = {},
     active = false,
-    alive = true
+    alive = true,
+    canDrop = false
 }
 
-function Piece:new(x, y, active, alive)
+function Piece:new(x, y, active, alive, tile)
     obj = {x = x - (Piece.img:getWidth()/2), y = y - (Piece.img:getHeight()/2), active = active, alive = alive}
     setmetatable(obj, self)
     self.__index = self
@@ -22,26 +24,33 @@ function Piece:load(piece, tiles)
     end
 end
 
-function Piece:grab(tile)
+function Piece:grab(tiles)
     self.active = true
-    self.x = love.mouse.getX() - (Piece.img:getWidth() / 2)
-    self.y = love.mouse.getY() - (Piece.img:getHeight() / 2)
+    self.x = love.mouse.getX() - (self.img:getWidth() / 2)
+    self.y = love.mouse.getY() - (self.img:getHeight() / 2) - 20
     for i, tile in pairs(tiles) do
         if self:isOnTile(self, tile) then
+            self.lastTile = tile
             tile.empty = true
         end
     end
+    self.canDrop = true
 end
 
 function Piece:drop(tiles)
-    for i, tile in pairs(tiles) do
-        if self:isOnTile(self, tile) and tile.empty then
-            self.x = tile.x - (self.img:getWidth()/2)
-            self.y = tile.y - (self.img:getHeight()/2)
-            tile.empty = false
-        else
-            
+    if self.canDrop then
+        for i, tile in pairs(tiles) do
+            if self:isOnTile(self, tile) and tile.empty then
+                self.x = tile.x - (self.img:getWidth()/2)
+                self.y = tile.y - (self.img:getHeight()/2)
+                self.lastTile = tile
+                tile.empty = false
+            else  
+                self.x = self.lastTile.x - (self.img:getWidth()/2)
+                self.y = self.lastTile.y - (self.img:getHeight()/2)
+            end
         end
+        self.canDrop = false
     end
 end
 
