@@ -45,9 +45,8 @@ function Piece:drop(tiles)
     end
 end
 
-function Piece:isOnTile(t1, tile) --fix this, it should check against self and not table
+function Piece:isOnTile(t1, tile)
     if t1.x < tile.x+tile.size and tile.x < t1.x+t1.img:getWidth() and t1.y < tile.y+tile.size and tile.y < t1.y+t1.img:getHeight() then
-        tile.empty = false
         return true
     else
         return false
@@ -79,7 +78,7 @@ function Piece:findNearest(moves)
     n = 0
     c = 0
     for i, move in pairs(moves) do
-        if self.x < move.x then
+        if self.x < move.x then --check > x and y
             c = self.x - move.x
             if (c < n) then
                 n = c
