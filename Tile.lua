@@ -16,27 +16,39 @@ end
 function Tile:load(tiles)
 	hSpace = 0
 	vSpace = 0
+
+	vSpace = vSpace + 60
+	hSpace = 28
+	self.x = 20
+	for c = 0, 2 do
+		table.insert(tiles, {x = self.x + hSpace, y = self.y + vSpace, size = self.size, empty = self.empty})
+		hSpace = hSpace + 180
+	end
+
+	vSpace = vSpace + 124
+	hSpace = 124
+	self.x = 20
+	for c = 0, 2 do
+		table.insert(tiles, {x = self.x + hSpace, y = self.y + vSpace, size = self.size, empty = self.empty})
+		hSpace = hSpace + 88
+	end
+	vSpace = vSpace + 110
+	hSpace = 32
 	for r = 0, 4 do
 		for c = 0, 4 do
 			table.insert(tiles, {x = self.x + hSpace, y = self.y + vSpace, size = self.size, empty = self.empty})
-			hSpace = hSpace + 128
+			hSpace = hSpace + 88
 		end
-		hSpace = 0
+		hSpace = 32
 		self.x = 20
-		vSpace = vSpace + 128
+		vSpace = vSpace + 116
 	end
-	hSpace = hSpace + 128
+	hSpace = hSpace + 88
 	for c = 0, 2 do 
 		table.insert(tiles, {x = self.x + hSpace, y = self.y + vSpace, size = self.size, empty = self.empty})
 		hSpace = hSpace + 128
 	end
-	vSpace = vSpace + 128
-	hSpace = 0
-	self.x = 20
-	for c = 0, 2 do
-		table.insert(tiles, {x = self.x + hSpace, y = self.y + vSpace, size = self.size, empty = self.empty})
-		hSpace = hSpace + 256
-	end
+	
 
     for i, tile in pairs(tiles) do
         tile.number = i

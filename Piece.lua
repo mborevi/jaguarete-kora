@@ -16,9 +16,11 @@ function Piece:new(img, x, y, active, alive, tile)
 end
 
 function Piece:load(piece, tiles)
+    --dogImgs = {'dog.png', 'dog0.png'}
     for i, tile in pairs(tiles) do
-        if i < 16 then
-            newPiece = Piece:new(love.graphics.newImage('dog.jpg'), tile.x, tile.y, false, true)
+        if i > 16 then
+            --newPiece = Piece:new(love.graphics.newImage(dogImgs[math.random(#dogImgs)]), tile.x, tile.y, false, true)
+            newPiece = Piece:new(love.graphics.newImage('dog.png'), tile.x, tile.y, false, true)
             table.insert(piece, newPiece)
         end
     end
