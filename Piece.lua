@@ -18,9 +18,9 @@ end
 function Piece:load(piece, tiles)
     --dogImgs = {'dog.png', 'dog0.png'}
     for i, tile in pairs(tiles) do
-        if i > 16 then
+        if i > 16 and i < 32 then
             --newPiece = Piece:new(love.graphics.newImage(dogImgs[math.random(#dogImgs)]), tile.x, tile.y, false, true)
-            newPiece = Piece:new(love.graphics.newImage('dog.png'), tile.x, tile.y, false, true)
+            newPiece = Piece:new(love.graphics.newImage('dog.png'), tile.x, tile.y - 40, false, true)
             table.insert(piece, newPiece)
         end
     end
@@ -49,7 +49,7 @@ function Piece:drop(tiles)
                 tile.empty = false
             else  
                 self.x = self.lastTile.x - (self.img:getWidth()/2)
-                self.y = self.lastTile.y - (self.img:getHeight()/2)
+                self.y = self.lastTile.y - (self.img:getHeight()/2) - 22
             end
         end
         self.canDrop = false
